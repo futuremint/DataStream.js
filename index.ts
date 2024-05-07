@@ -1282,7 +1282,7 @@ export default class DataStream {
         const p = this.position;
         for (let i = 0; i < structDefinition.length; i += 2) {
             t = structDefinition[i + 1];
-            v = this.readType(t, struct);
+            v = this.readType(t, struct as DataStream);
             if (v == null) {
                 if (this.failurePosition === 0) {
                     this.failurePosition = this.position;
@@ -1577,7 +1577,7 @@ export default class DataStream {
      * and for calling callbacks.
      * @return {?Object} Returns the object on successful read, null on unsuccessful.
      */
-    readType(t: StructRead, struct: object): any {
+    readType(t: StructRead, struct: object & DataStream): any {
         if (typeof t === "function") {
             return t(this, struct);
         } else if (typeof t === "object" && !(t instanceof Array)) {
